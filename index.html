@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fractional Controller &amp; CFO Services Proposal — Ummah Society</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; line-height: 1.7; color: #1a1a1a; background: #f0f0f0; }
+    :root { --green-dark:#1b5e20; --green-mid:#2e7d32; --green-light:#e8f5e9; --green-border:#a5d6a7; --red:#c62828; --black:#1a1a1a; --white:#ffffff; }
+    .page { max-width:920px; margin:0 auto; background:var(--white); box-shadow:0 2px 32px rgba(0,0,0,0.12); }
+
+    /* COVER */
+    .cover { background:var(--green-dark); color:var(--white); padding:72px 64px 56px; position:relative; overflow:hidden; }
+    .cover::before { content:''; position:absolute; top:-80px; right:-80px; width:320px; height:320px; border-radius:50%; background:rgba(255,255,255,0.05); }
+    .cover::after { content:''; position:absolute; bottom:-60px; left:-60px; width:240px; height:240px; border-radius:50%; background:rgba(198,40,40,0.18); }
+    .cover-label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--green-border); margin-bottom:18px; font-weight:600; }
+    .cover h1 { font-size:38px; font-weight:800; line-height:1.15; margin-bottom:6px; color:#fff; }
+    .cover h1 span { color:#ef9a9a; }
+    .cover-sub { font-size:15px; color:rgba(255,255,255,0.72); margin-bottom:48px; font-style:italic; }
+    .cover-divider { width:60px; height:4px; background:var(--red); border-radius:2px; margin:28px 0; }
+    .cover-meta { display:flex; gap:48px; flex-wrap:wrap; }
+    .cover-meta-item label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--green-border); margin-bottom:4px; }
+    .cover-meta-item span { font-size:15px; font-weight:600; color:#fff; }
+    .confidential-badge { position:absolute; top:28px; right:56px; background:var(--red); color:#fff; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 14px; border-radius:2px; z-index:2; }
+
+    /* NAV */
+    .nav { background:var(--black); position:sticky; top:0; z-index:100; display:flex; overflow-x:auto; }
+    .nav a { color:rgba(255,255,255,0.65); text-decoration:none; font-size:11.5px; font-weight:600; letter-spacing:0.4px; padding:13px 15px; white-space:nowrap; border-bottom:3px solid transparent; transition:color 0.2s,border-color 0.2s; }
+    .nav a:hover { color:#fff; border-bottom-color:var(--red); }
+
+    /* SECTIONS */
+    .section { padding:52px 64px; border-bottom:1px solid #e8e8e8; }
+    .section:last-child { border-bottom:none; }
+    .section-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+    .section-icon { width:38px; height:38px; background:var(--green-dark); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:17px; }
+    .section h2 { font-size:22px; font-weight:800; color:var(--green-dark); padding-bottom:10px; border-bottom:3px solid var(--red); flex:1; }
+    p { margin-bottom:14px; color:#333; }
+    p:last-child { margin-bottom:0; }
+
+    .callout { background:var(--green-light); border-left:5px solid var(--green-mid); border-radius:0 8px 8px 0; padding:20px 24px; margin:20px 0; }
+    .callout p { color:#2e4f2e; margin-bottom:8px; }
+
+    /* TWO-COL */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:20px 0; }
+    @media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+    .card { border:1px solid #e0e0e0; border-radius:10px; padding:20px 22px; }
+    .card h3 { font-size:12px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px; padding-bottom:8px; border-bottom:2px solid; }
+    .card.strengths h3 { color:var(--green-mid); border-color:var(--green-mid); }
+    .card.gaps h3 { color:var(--red); border-color:var(--red); }
+    .card ul { list-style:none; padding:0; }
+    .card ul li { position:relative; padding-left:18px; margin-bottom:8px; font-size:14px; color:#333; line-height:1.5; }
+    .card.strengths ul li::before { content:'✓'; position:absolute; left:0; color:var(--green-mid); font-weight:700; }
+    .card.gaps ul li::before { content:'→'; position:absolute; left:0; color:var(--red); font-weight:700; }
+
+    /* TABLES */
+    .table-wrap { overflow-x:auto; margin:20px 0; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    thead tr { background:var(--green-dark); color:#fff; }
+    thead th { padding:12px 16px; text-align:left; font-size:11.5px; letter-spacing:0.8px; text-transform:uppercase; font-weight:700; }
+    tbody tr { border-bottom:1px solid #e8e8e8; }
+    tbody tr:hover { background:var(--green-light); }
+    tbody td { padding:11px 16px; color:#333; vertical-align:top; }
+    .badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:20px; }
+    .badge-high { background:#ffebee; color:var(--red); }
+    .badge-medium { background:#fff8e1; color:#e65100; }
+
+    /* PHASES */
+    .phases { display:flex; flex-direction:column; gap:20px; margin:24px 0; }
+    .phase { border:1px solid var(--green-border); border-radius:10px; overflow:hidden; }
+    .phase-header { background:var(--green-dark); color:#fff; padding:14px 22px; display:flex; align-items:center; gap:14px; }
+    .phase-num { background:var(--red); color:#fff; font-size:10px; font-weight:800; letter-spacing:1px; padding:3px 10px; border-radius:3px; text-transform:uppercase; flex-shrink:0; }
+    .phase-title { font-size:15px; font-weight:700; }
+    .phase-period { margin-left:auto; font-size:12px; opacity:0.70; }
+    .phase-body { padding:18px 22px; }
+    .phase-body ul { list-style:none; padding:0; }
+    .phase-body ul li { position:relative; padding-left:20px; margin-bottom:9px; font-size:14px; color:#333; line-height:1.55; }
+    .phase-body ul li::before { content:'▸'; position:absolute; left:0; color:var(--green-mid); font-size:12px; top:3px; }
+
+    /* CHECKLIST */
+    .checklist { list-style:none; padding:0; margin:16px 0; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media(max-width:640px){.checklist{grid-template-columns:1fr;}}
+    .checklist li { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:#333; background:var(--green-light); border-radius:7px; padding:10px 14px; line-height:1.5; }
+    .checklist li .chk { color:var(--green-mid); font-weight:900; font-size:15px; flex-shrink:0; margin-top:1px; }
+
+    /* COMMITMENT GRID */
+    .commitment-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0; }
+    @media(max-width:640px){.commitment-grid{grid-template-columns:1fr;}}
+    .commitment-item { border:1px solid #e0e0e0; border-top:4px solid var(--green-dark); border-radius:0 0 8px 8px; padding:18px 20px; }
+    .commitment-item h4 { font-size:12px; font-weight:800; color:var(--green-dark); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
+    .commitment-item p { font-size:14px; color:#444; margin:0; }
+
+    /* TEAM */
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin:24px 0; }
+    @media(max-width:700px){.team-grid{grid-template-columns:1fr;}}
+    .team-card { border:1px solid #e0e0e0; border-radius:10px; overflow:hidden; }
+    .team-card-header { background:var(--green-dark); padding:18px 18px 14px; }
+    .team-card-header .avatar { width:44px; height:44px; background:var(--red); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:800; margin-bottom:10px; }
+    .team-card-header h4 { font-size:15px; font-weight:700; color:#fff; margin-bottom:3px; }
+    .team-card-header .creds { font-size:11px; color:var(--green-border); font-weight:600; margin-bottom:2px; }
+    .team-card-header .role { font-size:10.5px; color:rgba(255,255,255,0.55); text-transform:uppercase; font-weight:600; letter-spacing:0.8px; }
+    .team-card-body { padding:14px 18px; }
+    .team-card-body p { font-size:13.5px; color:#444; line-height:1.6; margin:0; }
+
+    /* ══ SERVICE TIERS ══ */
+    .tiers-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; margin:28px 0; align-items:stretch; border:2px solid #ddd; border-radius:14px; overflow:hidden; }
+    @media(max-width:700px){.tiers-grid{grid-template-columns:1fr;}}
+    .tier-card { position:relative; display:flex; flex-direction:column; }
+    .tier-card+.tier-card { border-left:2px solid #ddd; }
+    .tier-card.silver { border-left:3px solid var(--green-dark); border-right:3px solid var(--green-dark); z-index:1; }
+    @media(max-width:700px){ .tier-card+.tier-card{border-left:none;border-top:2px solid #ddd;} .tier-card.silver{border-left:none;border-right:none;border-top:3px solid var(--green-dark);border-bottom:3px solid var(--green-dark);} }
+    .tier-header { padding:24px 22px 20px; text-align:center; }
+    .tier-card.bronze .tier-header { background:#4e342e; }
+    .tier-card.silver .tier-header { background:var(--green-dark); }
+    .tier-card.gold   .tier-header { background:#1a1a1a; }
+    .this-proposal-banner { background:var(--red); color:#fff; font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; text-align:center; padding:7px 0; width:100%; }
+    .tier-icon { font-size:26px; margin-bottom:8px; }
+    .tier-name { font-size:18px; font-weight:800; color:#fff; margin-bottom:4px; }
+    .tier-tagline { font-size:12px; color:rgba(255,255,255,0.60); margin-bottom:16px; line-height:1.45; min-height:40px; }
+    .tier-price { font-size:28px; font-weight:900; color:#fff; line-height:1; }
+    .tier-price sup { font-size:15px; font-weight:700; vertical-align:super; }
+    .tier-price span { font-size:13px; font-weight:400; opacity:0.70; }
+    .tier-days { font-size:11px; color:rgba(255,255,255,0.60); margin-top:7px; line-height:1.45; }
+    .tier-body { padding:20px; flex:1; }
+    .tier-card.silver .tier-body { background:#f8fdf8; }
+    .tier-body ul { list-style:none; padding:0; margin:0; }
+    .tier-body ul li { font-size:13.5px; color:#333; padding:7px 0 7px 22px; border-bottom:1px solid #f0f0f0; position:relative; line-height:1.45; }
+    .tier-body ul li:last-child { border-bottom:none; }
+    .tier-body ul li::before { content:'✓'; position:absolute; left:0; font-weight:700; }
+    .tier-card.bronze .tier-body ul li::before { color:#a1887f; }
+    .tier-card.silver .tier-body ul li::before { color:var(--green-mid); }
+    .tier-card.gold   .tier-body ul li::before { color:#f9a825; }
+    .tier-body ul li.excl { color:#c5c5c5; text-decoration:line-through; }
+    .tier-body ul li.excl::before { content:'✗'; color:#ddd; }
+    .tier-highlight { background:var(--green-light); font-weight:600; color:var(--green-dark) !important; border-radius:4px; }
+    .tier-highlight::before { color:var(--green-dark) !important; }
+
+    /* PRICING TABLE */
+    .price-table thead tr { background:var(--black); }
+    .price-cell { font-weight:700; color:var(--green-dark); font-size:15px; }
+    .days-cell { color:#555; font-size:13px; }
+    .overages-note { background:#fff8e1; border-left:4px solid #f9a825; padding:12px 18px; border-radius:0 6px 6px 0; font-size:13.5px; color:#555; margin-top:14px; }
+
+    /* STEPS */
+    .steps { display:flex; flex-direction:column; gap:14px; margin:20px 0; }
+    .step { display:flex; gap:18px; align-items:flex-start; border:1px solid #e0e0e0; border-radius:8px; padding:16px 20px; }
+    .step-num { width:34px; height:34px; background:var(--red); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0; }
+    .step-text h4 { font-size:15px; font-weight:700; color:var(--green-dark); margin-bottom:3px; }
+    .step-text p { font-size:14px; color:#555; margin:0; }
+
+    /* SIGNATURE */
+    .sig-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin:28px 0; }
+    @media(max-width:600px){.sig-grid{grid-template-columns:1fr;}}
+    .sig-block h4 { font-size:13px; font-weight:800; color:var(--green-dark); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:20px; padding-bottom:8px; border-bottom:3px solid var(--red); }
+    .sig-line { margin-bottom:22px; }
+    .sig-line label { display:block; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#999; margin-bottom:6px; }
+    .sig-line .line { height:1px; background:#ccc; width:100%; }
+
+    /* FOOTER */
+    .footer { background:var(--black); color:rgba(255,255,255,0.50); text-align:center; padding:22px 40px; font-size:12px; }
+    .footer strong { color:rgba(255,255,255,0.82); }
+    .note { font-size:13px; color:#777; font-style:italic; margin-top:10px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="confidential-badge">Confidential</div>
+    <div class="cover-label">Service Proposal</div>
+    <h1>Fractional Controller<br>&amp; <span>CFO Services</span></h1>
+    <p class="cover-sub">Prepared exclusively for Ummah Society</p>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><label>Submitted By</label><span>Islamic Family &amp; Social Services Association</span></div>
+      <div class="cover-meta-item"><label>Prepared For</label><span>Ummah Society</span></div>
+      <div class="cover-meta-item"><label>Date</label><span>March 30, 2026</span></div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#summary">Summary</a>
+    <a href="#needs">Your Needs</a>
+    <a href="#scope">Scope</a>
+    <a href="#deliverables">Deliverables</a>
+    <a href="#responsibilities">Responsibilities</a>
+    <a href="#success">Success</a>
+    <a href="#commitment">Commitment</a>
+    <a href="#team">Our Team</a>
+    <a href="#tiers">Service Tiers</a>
+    <a href="#investment">Investment</a>
+    <a href="#terms">Terms</a>
+    <a href="#nextsteps">Next Steps</a>
+    <a href="#acceptance">Acceptance</a>
+  </nav>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="section" id="summary">
+    <div class="section-header"><div class="section-icon">📋</div><h2>Executive Summary</h2></div>
+    <div class="callout">
+      <p>IslamicFamily is pleased to present this proposal for Fractional Controller services to Ummah Society. Having had the opportunity to understand your organization's current financial model, growth trajectory, and operational structure, we believe we are well-positioned to help Ummah Society navigate its next stage of development.</p>
+    </div>
+    <p>Ummah Society has demonstrated remarkable growth — revenue has increased <strong>50% year-over-year</strong> and now requires financial leadership commensurate with that scale. We propose to serve as your embedded financial leadership: providing the controller-level oversight, high-level strategic guidance, and reporting infrastructure your organization needs to grow sustainably and serve your community with confidence.</p>
+  </div>
+
+  <!-- UNDERSTANDING YOUR NEEDS -->
+  <div class="section" id="needs">
+    <div class="section-header"><div class="section-icon">🔍</div><h2>Understanding Your Needs</h2></div>
+    <p>Through our exploratory discussions, we identified the following key themes:</p>
+    <div class="two-col">
+      <div class="card strengths">
+        <h3>Strengths to Build On</h3>
+        <ul>
+          <li>Established systems for tracking revenue streams from donations, tuition, and grants</li>
+          <li>Effective use of Dext for AP, credit cards, and invoice management</li>
+          <li>Existing budgeting process for revenue and expenses</li>
+          <li>Strong budget controls enforced by organizational leadership</li>
+        </ul>
+      </div>
+      <div class="card gaps">
+        <h3>Gaps We Propose to Address</h3>
+        <ul>
+          <li>Financial literacy — translating numbers into insight and action for departmental managers and leadership</li>
+          <li>Capacity constraints — Treasurer Ahmed Nassrat needs to offload hands-on workload</li>
+          <li>Growth management — 50% YoY revenue demands more sophisticated forecasting and reporting</li>
+          <li>Transition from quarterly to monthly financial reconciliation</li>
+          <li>Capital budgeting — currently absent from the planning cycle</li>
+          <li>Audit support — guidance through the annual external audit</li>
+          <li>Aplos reporting optimization</li>
+        </ul>
+      </div>
+    </div>
+    <h3 style="font-size:15px;font-weight:700;color:var(--green-dark);margin:28px 0 12px;">Organizational Complexity</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Program / Location</th><th>Complexity</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Daycare</strong></td><td><span class="badge badge-high">High</span></td><td>Dedicated AR clerk; invoicing volume, annual tax receipt</td></tr>
+          <tr><td><strong>Academy</strong></td><td><span class="badge badge-medium">Medium</span></td><td>Tuition and program revenue</td></tr>
+          <tr><td><strong>Halifax Mosque</strong></td><td><span class="badge badge-high">High</span></td><td>Primary donation hub with cash and POS transactions</td></tr>
+          <tr><td><strong>Wolfville Mosque</strong></td><td><span class="badge badge-medium">Medium</span></td><td>Satellite operations</td></tr>
+          <tr><td><strong>Antigonish Mosque</strong></td><td><span class="badge badge-medium">Medium</span></td><td>Satellite operations</td></tr>
+          <tr><td><strong>Atlantic Resource Centre</strong></td><td><span class="badge badge-high">High</span></td><td>Social services with government grant compliance</td></tr>
+          <tr><td><strong>Kitchen</strong></td><td><span class="badge badge-medium">Medium</span></td><td>Cost centre with cash and POS transactions</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">With 7 bank accounts and multiple revenue streams (e-transfer, cash, POS/Clover, grants, Mohid, FundraiseUp/Stripe, website), your finance function carries considerable technical weight.</p>
+  </div>
+
+  <!-- PROPOSED SCOPE -->
+  <div class="section" id="scope">
+    <div class="section-header"><div class="section-icon">📁</div><h2>Proposed Scope of Services</h2></div>
+    <p>We propose a phased engagement structured around your immediate needs and long-term financial maturity goals.</p>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-header"><span class="phase-num">Phase 1</span><span class="phase-title">Foundation</span><span class="phase-period">Months 1–3</span></div>
+        <div class="phase-body"><ul>
+          <li>Onboarding and full review of current financial systems, chart of accounts, and Aplos configuration</li>
+          <li>Review and rationalize bank accounts and departmental structures</li>
+          <li>Establish month-end close process and internal reporting calendar</li>
+          <li>Financial literacy sessions with Executive Director and key staff</li>
+          <li>Support transition of hands-on duties from Treasurer to IslamicFamily team</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="phase-header"><span class="phase-num">Phase 2</span><span class="phase-title">Reporting &amp; Controls</span><span class="phase-period">Months 4–6</span></div>
+        <div class="phase-body"><ul>
+          <li>Monthly financial statements (Balance Sheet, Income Statement) with department-level detail</li>
+          <li>Restricted fund tracking and Zakat ul Mal compliance reporting</li>
+          <li>Develop and implement capital budgeting framework</li>
+          <li>Grant reporting templates and compliance tracking</li>
+          <li>Cash flow forecasting model</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="phase-header"><span class="phase-num">Phase 3</span><span class="phase-title">Strategic Finance</span><span class="phase-period">Months 7–12</span></div>
+        <div class="phase-body"><ul>
+          <li>Annual budget development (operating and capital)</li>
+          <li>Audit preparation and liaison with external auditors</li>
+          <li>CFO-level advisory: strategic planning, funding mix optimization, scenario analysis</li>
+          <li>Leadership financial literacy for board and senior staff</li>
+          <li>Year-end review and Year 2 planning</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELIVERABLES -->
+  <div class="section" id="deliverables">
+    <div class="section-header"><div class="section-icon">📦</div><h2>Deliverables by Phase</h2></div>
+    <p>All monthly reports will be delivered by the <strong>15th of the following month</strong> unless otherwise noted.</p>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-header"><span class="phase-num">Phase 1</span><span class="phase-title">Foundation Deliverables</span><span class="phase-period">Months 1–3</span></div>
+        <div class="phase-body"><ul>
+          <li>Written assessment of current Aplos configuration and chart of accounts, with recommended changes</li>
+          <li>Documented month-end close checklist and internal reporting calendar</li>
+          <li>Summary report following each financial literacy session</li>
+          <li>Transition plan for handoff of hands-on duties from the Treasurer</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="phase-header"><span class="phase-num">Phase 2</span><span class="phase-title">Reporting &amp; Controls Deliverables</span><span class="phase-period">Months 4–6</span></div>
+        <div class="phase-body"><ul>
+          <li>Monthly Balance Sheet and Income Statement with department-level detail, by the 15th</li>
+          <li>Restricted fund and Zakat ul Mal compliance report, monthly</li>
+          <li>Cash flow forecast, updated monthly</li>
+          <li>Grant reporting tracker, updated as required by funder timelines</li>
+          <li>Capital budgeting framework document (delivered once in Month 5)</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="phase-header"><span class="phase-num">Phase 3</span><span class="phase-title">Strategic Finance Deliverables</span><span class="phase-period">Months 7–12</span></div>
+        <div class="phase-body"><ul>
+          <li>Ongoing monthly financial statements (as above)</li>
+          <li>Draft annual operating and capital budget for leadership review (Month 9)</li>
+          <li>Audit preparation file and auditor liaison coordination</li>
+          <li>Quarterly CFO advisory summary: strategic planning, funding mix, scenario analysis</li>
+          <li>Year-end review report and Year 2 engagement proposal</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENT RESPONSIBILITIES -->
+  <div class="section" id="responsibilities">
+    <div class="section-header"><div class="section-icon">🤝</div><h2>Client Responsibilities</h2></div>
+    <p>To ensure timely delivery of financial reports and services, Ummah Society agrees to:</p>
+    <div class="table-wrap" style="margin-top:16px;">
+      <table>
+        <thead><tr><th>#</th><th>Responsibility</th><th>Deadline</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Provide full access to Aplos, Dext, and all relevant bank accounts</td><td>Within 5 business days of engagement start</td></tr>
+          <tr><td>2</td><td>Deliver bank statements, donation records, and departmental expense reports</td><td>By the 5th of each month</td></tr>
+          <tr><td>3</td><td>Designate a primary internal contact (Accountant or Bookkeeper) to respond to IslamicFamily requests</td><td>Within 3 business days</td></tr>
+          <tr><td>4</td><td>Ensure invoices, receipts, and AP documents are uploaded to Dext on an ongoing basis — not in bulk at month-end</td><td>Ongoing</td></tr>
+          <tr><td>5</td><td>Provide access to grant agreements, funder correspondence, and audit materials</td><td>As requested</td></tr>
+          <tr><td>6</td><td>Notify IslamicFamily of material financial events (large donations, new grants, significant expenses)</td><td>Within 5 business days</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Delays in providing the above may impact reporting timelines. IslamicFamily will communicate any such delays in writing and adjust delivery dates accordingly.</p>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="section" id="success">
+    <div class="section-header"><div class="section-icon">🎯</div><h2>Success at 12 Months</h2></div>
+    <p>Based on our conversations, we understand success to mean:</p>
+    <ul class="checklist">
+      <li><span class="chk">✓</span> Ahmed Nassrat is operating as a strategic Treasurer, not a hands-on Controller</li>
+      <li><span class="chk">✓</span> Monthly financial statements are prepared on time and understood by leadership</li>
+      <li><span class="chk">✓</span> A capital budgeting process is in place and embedded in annual planning</li>
+      <li><span class="chk">✓</span> The finance team (3 FTE) has clear roles and access to strong leadership</li>
+      <li><span class="chk">✓</span> Grant reporting is timely, complete, and audit-ready</li>
+      <li><span class="chk">✓</span> Auditors are well-supported and the audit process is smooth</li>
+      <li><span class="chk">✓</span> Aplos is fully optimized for your reporting needs</li>
+      <li><span class="chk">✓</span> Leadership can comprehend departmental budgets and reporting with confidence</li>
+    </ul>
+  </div>
+
+  <!-- COMMITMENT -->
+  <div class="section" id="commitment">
+    <div class="section-header"><div class="section-icon">🌿</div><h2>Our Commitment to You</h2></div>
+    <p>We understand that trust is foundational, particularly for matters of Zakat management and restricted funds. Our approach is grounded in transparency, Islamic values, and professional accountability.</p>
+    <div class="commitment-grid">
+      <div class="commitment-item">
+        <h4>How We Handle Disagreements</h4>
+        <p>We commit to bringing all material financial judgements to leadership with clear options and our recommendation, never acting unilaterally. Where we disagree, we will put our reasoning in writing and defer to your final authority. Our goal is always to be on the same page.</p>
+      </div>
+      <div class="commitment-item">
+        <h4>Zakat &amp; Restricted Funds</h4>
+        <p>All restricted fund activity will be tracked with full documentation. We will work with Sheikh Abdullah's guidance on matters requiring religious oversight, with full respect for donor trust and community expectations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUR TEAM -->
+  <div class="section" id="team">
+    <div class="section-header"><div class="section-icon">👥</div><h2>Our Team</h2></div>
+    <p>The following IslamicFamily staff will lead your engagement:</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-header">
+          <div class="avatar">OK</div>
+          <h4>Omar Kalim</h4>
+          <div class="creds">CPA</div>
+          <div class="role">Engagement Lead</div>
+        </div>
+        <div class="team-card-body">
+          <p>Omar brings 7 years of experience in financial management, audit, and tax, including work with federally registered charities, restricted fund accounting, and CRA compliance. He serves as the primary day-to-day contact and owns the month-end close process and all reporting deliverables.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-header">
+          <div class="avatar">HA</div>
+          <h4>Hamza Ahmad</h4>
+          <div class="creds">CPA, ACCA</div>
+          <div class="role">Controller Support</div>
+        </div>
+        <div class="team-card-body">
+          <p>Hamza supports the engagement team with bookkeeping oversight, Aplos administration, and grant tracking. He brings 8 years of experience working with multi-location charitable organizations.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-header">
+          <div class="avatar">OY</div>
+          <h4>Omar Yaqub</h4>
+          <div class="creds">Executive Director</div>
+          <div class="role">Executive Sponsor</div>
+        </div>
+        <div class="team-card-body">
+          <p>Omar provides senior oversight and will be available to Ummah Society leadership for strategic and governance matters throughout the entire engagement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICE TIERS -->
+  <div class="section" id="tiers">
+    <div class="section-header"><div class="section-icon">🏆</div><h2>Service Tiers</h2></div>
+    <p>We offer three levels of fractional financial support, designed to meet organizations at different stages of growth. <strong style="color:var(--green-dark);">The package outlined in this proposal is Silver</strong> — our most comprehensive tier for growing charitable organizations with multi-location complexity.</p>
+
+    <div class="tiers-grid">
+      <!-- BRONZE -->
+      <div class="tier-card bronze">
+        <div class="tier-header">
+          <div class="tier-icon">🥉</div>
+          <div class="tier-name">Bronze</div>
+          <div class="tier-tagline">Essential financial oversight for smaller or early-stage organizations</div>
+          <div class="tier-price"><sup>$</sup>3,500<span> /mo</span></div>
+          <div class="tier-days">Up to 4 days / month</div>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li>Month-end close and basic financial statements</li>
+            <li>Aplos maintenance and bookkeeping oversight</li>
+            <li>Bank reconciliation across primary accounts</li>
+            <li>Quarterly leadership check-in</li>
+            <li>Email support (3-day response)</li>
+            <li class="excl">Financial literacy sessions</li>
+            <li class="excl">Cash flow forecasting</li>
+            <li class="excl">Grant reporting support</li>
+            <li class="excl">Capital budgeting framework</li>
+            <li class="excl">CFO-level advisory</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SILVER -->
+      <div class="tier-card silver">
+        <div class="this-proposal-banner">&#9733; &nbsp; This Proposal &nbsp; &#9733;</div>
+        <div class="tier-header">
+          <div class="tier-icon">🥈</div>
+          <div class="tier-name">Silver</div>
+          <div class="tier-tagline">Full controller + strategic guidance for growing multi-location organizations</div>
+          <div class="tier-price"><sup>$</sup>6,500–8,000<span> /mo</span></div>
+          <div class="tier-days">Up to 8 days/mo (Phase 1)<br>Up to 6 days/mo (Phases 2–3)</div>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li class="tier-highlight">Everything in Bronze</li>
+            <li>Full phased engagement — Foundation → Reporting → Strategic</li>
+            <li>Monthly financials with department-level detail</li>
+            <li>Restricted fund &amp; Zakat ul Mal compliance reporting</li>
+            <li>Financial literacy sessions with staff and leadership</li>
+            <li>Cash flow forecasting model</li>
+            <li>Capital budgeting framework</li>
+            <li>Grant reporting templates and compliance tracking</li>
+            <li>Quarterly CFO advisory summary</li>
+            <li>Additional support at $150/hour</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- GOLD -->
+      <div class="tier-card gold">
+        <div class="tier-header">
+          <div class="tier-icon">🥇</div>
+          <div class="tier-name">Gold</div>
+          <div class="tier-tagline">Embedded CFO with full strategic leadership and board-level reporting</div>
+          <div class="tier-price"><sup>$</sup>11,000<span> /mo</span></div>
+          <div class="tier-days">Up to 12 days / month</div>
+        </div>
+        <div class="tier-body">
+          <ul>
+            <li class="tier-highlight">Everything in Silver</li>
+            <li>Weekly check-ins with Executive Director</li>
+            <li>Board financial presentations (quarterly)</li>
+            <li>Full audit management — included, not add-on</li>
+            <li>Multi-year financial modeling and scenario planning</li>
+            <li>Fundraising strategy and funding mix advisory</li>
+            <li>Same-day response during business hours</li>
+            <li>Priority access for urgent financial matters</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="note">All tiers are structured as monthly retainers. Tier upgrades or downgrades can be negotiated at the end of any phase.</p>
+  </div>
+
+  <!-- PROPOSED INVESTMENT -->
+  <div class="section" id="investment">
+    <div class="section-header"><div class="section-icon">💼</div><h2>Proposed Investment</h2></div>
+    <p>Our engagement is structured as a monthly retainer adjusted by phase and scope, with a defined number of engagement days per month to ensure clarity on both sides.</p>
+    <div class="table-wrap">
+      <table class="price-table">
+        <thead><tr><th>Service Tier</th><th>Days / Month</th><th>Monthly Investment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Phase 1 — Foundation</strong> <em style="color:#999;font-size:12px;">(Months 1–3)</em></td><td class="days-cell">Up to 8 days</td><td class="price-cell">$8,000</td></tr>
+          <tr><td><strong>Phase 2 — Reporting &amp; Controls</strong> <em style="color:#999;font-size:12px;">(Months 4–6)</em></td><td class="days-cell">Up to 6 days</td><td class="price-cell">$6,500</td></tr>
+          <tr><td><strong>Phase 3 — Strategic Finance</strong> <em style="color:#999;font-size:12px;">(Months 7–12)</em></td><td class="days-cell">Up to 6 days</td><td class="price-cell">$6,500</td></tr>
+          <tr><td><strong>Additional Support</strong> <em style="color:#999;font-size:12px;">(as needed)</em></td><td class="days-cell">As needed</td><td class="price-cell">$150 / hour</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="overages-note">
+      💡 We view this as a long-term partnership and will price accordingly. We are open to discussing a structure that reflects Ummah Society's budget realities.
+    </div>
+  </div>
+
+  <!-- TERMS AND TERMINATION -->
+  <div class="section" id="terms">
+    <div class="section-header"><div class="section-icon">📄</div><h2>Terms and Termination</h2></div>
+    <div class="commitment-grid">
+      <div class="commitment-item">
+        <h4>Initial Term</h4>
+        <p>This engagement is proposed for an initial term of <strong>twelve (12) months</strong> commencing on the onboarding date. Following the initial term, the engagement continues month-to-month unless otherwise agreed in writing.</p>
+      </div>
+      <div class="commitment-item">
+        <h4>Notice Period</h4>
+        <p>Either party may terminate by providing <strong>30 days' written notice</strong> after completion of Phase 1 (Month 3). A minimum three-month commitment applies during Phase 1 to ensure continuity of the foundation work.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px;">
+      <p><strong>Upon termination:</strong> IslamicFamily will deliver all financial records, working files, and Aplos documentation to Ummah Society within 10 business days, and will support a reasonable transition period not to exceed two weeks.</p>
+    </div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="section" id="nextsteps">
+    <div class="section-header"><div class="section-icon">🚀</div><h2>Next Steps</h2></div>
+    <p>We suggest the following path forward:</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><h4>Review this proposal</h4><p>Share with your leadership team and Treasurer for internal discussion.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><h4>Schedule a follow-up meeting</h4><p>Confirm scope, answer questions, and finalize engagement terms together.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Execute engagement letter and begin onboarding</h4><p>Sign the formal engagement letter and kick off Phase 1.</p></div></div>
+    </div>
+    <div class="callout" style="margin-top:28px;text-align:center;">
+      <p style="font-size:16px;font-weight:600;color:var(--green-dark);">We are honoured by the opportunity to serve Ummah Society and the broader community.</p>
+      <p style="font-size:20px;font-weight:800;color:var(--green-dark);margin-top:8px;">IslamicFamily.</p>
+    </div>
+  </div>
+
+  <!-- ACCEPTANCE -->
+  <div class="section" id="acceptance">
+    <div class="section-header"><div class="section-icon">✍️</div><h2>Acceptance</h2></div>
+    <p>By signing below, both parties agree to the scope, investment, and terms outlined in this proposal. A formal engagement letter will follow and will govern the specific legal terms of this arrangement.</p>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <h4>IslamicFamily &amp; Social Services Association</h4>
+        <div class="sig-line"><label>Signature</label><div class="line"></div></div>
+        <div class="sig-line"><label>Name</label><div class="line"></div></div>
+        <div class="sig-line"><label>Title</label><div class="line"></div></div>
+        <div class="sig-line"><label>Date</label><div class="line"></div></div>
+      </div>
+      <div class="sig-block">
+        <h4>Ummah Society</h4>
+        <div class="sig-line"><label>Signature</label><div class="line"></div></div>
+        <div class="sig-line"><label>Name</label><div class="line"></div></div>
+        <div class="sig-line"><label>Title</label><div class="line"></div></div>
+        <div class="sig-line"><label>Date</label><div class="line"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>Islamic Family &amp; Social Services Association</strong> &nbsp;·&nbsp; Prepared for Ummah Society &nbsp;·&nbsp; March 30, 2026 &nbsp;·&nbsp; Confidential
+  </div>
+
+</div>
+</body>
+</html>
